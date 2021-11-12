@@ -7,6 +7,8 @@ let btnCaBack = $('#btnBackCa')
 let btnTakePh = $('#btnTakeOn')
 let photoUser = $('#photoUser')
 
+let tipo = ""
+
 const CAMARA = new Camera(play[0]);
 
 btnCamere.on('click', () => {
@@ -18,6 +20,7 @@ btnCamere.on('click', () => {
         }
     });
 
+    tipo = "Frontal"
 })
 
 btnCaBack.on('click', () => {
@@ -28,13 +31,26 @@ btnCaBack.on('click', () => {
             alert("Error al iniciar camara")
         }
     });
+
+    tipo = "Trasera"
 })
 
 btnTakePh.on('click', () => {
     console.log("Tomar foto");
 
     CAMARA.apagar();
-    photoUser.attr('src', CAMARA.takePhoto());
+    //photoUser.attr('src', CAMARA.takePhoto());
+    //var srcPhoto = CAMARA.takePhoto()
+
+    let photoHtml = $(`<div class="col-sm-6" 
+                        <div class="card" style="width: 300px;">
+                            <img src="${CAMARA.takePhoto()}" width="300" height="300" id="photoUser">
+                            <div class="card-body">
+                                <p class="card-text">${tipo}</p>
+                            </div>
+                        </div>
+                    </div>`);
+    $("#divPhoto").append(photoHtml)
 })
 
 if(navigator.serviceWorker){
